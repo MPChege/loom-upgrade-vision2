@@ -38,12 +38,16 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button variant="hero" size="xl" className="group">
-              Explore Our Products
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <a href="/orders" className="flex items-center gap-2">
+                Explore Our Products
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </a>
             </Button>
             <Button variant="elegant" size="xl">
-              <Plane className="h-5 w-5" />
-              Export Services
+              <a href="/orders" className="flex items-center gap-2">
+                <Plane className="h-5 w-5" />
+                Place Order
+              </a>
             </Button>
           </div>
 

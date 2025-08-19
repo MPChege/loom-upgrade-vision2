@@ -155,7 +155,7 @@ const Products = () => {
         {/* CTA */}
         <div className="text-center mt-16">
           <Button variant="rose" size="xl">
-            View Complete Catalog
+            <a href="/orders">Place Your Order</a>
           </Button>
         </div>
       </div>
