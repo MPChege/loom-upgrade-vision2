@@ -3,6 +3,9 @@ import { ArrowRight, Plane, MapPin, Flower, Sparkles, Play } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
+import heroFlowers from "@/assets/hero-flowers.jpg";
+import roseBouquet from "@/assets/rose-bouquet.jpg";
+import greenhouse from "@/assets/greenhouse.jpg";
 
 const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -14,9 +17,9 @@ const Hero = () => {
   const { elementRef: statsRef, isVisible: isStatsVisible } = useScrollAnimation({ threshold: 0.6 });
 
   const heroImages = [
-    '/src/assets/hero-flowers.jpg',
-    '/src/assets/rose-bouquet.jpg', 
-    '/src/assets/greenhouse.jpg'
+    heroFlowers,
+    roseBouquet, 
+    greenhouse
   ];
 
   useEffect(() => {
@@ -160,7 +163,7 @@ const Hero = () => {
         <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-700 ${
           isStatsVisible 
             ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
+            : 'opacity-0 translate-y-12'
         }`}>
           {[
             { number: "50+", label: "Rose Varieties" },
