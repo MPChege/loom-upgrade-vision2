@@ -59,9 +59,11 @@ const Footer = () => {
             {/* Company Info */}
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-                  <Flower className="h-6 w-6 text-white" />
-                </div>
+                <img 
+                  src="/logo.png" 
+                  alt="Credible Blooms Logo" 
+                  className="h-12 w-auto transition-transform duration-300 hover:scale-105"
+                />
                 <div>
                   <h3 className="text-2xl font-bold font-playfair">Credible Blooms</h3>
                   <p className="text-white/70 text-sm">Growing Excellence</p>
