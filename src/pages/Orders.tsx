@@ -1,5 +1,21 @@
 import { useState } from "react";
-import { ShoppingCart, Package, Truck, CreditCard, User, MapPin, Phone, Calendar } from "lucide-react";
+import { 
+  ShoppingCart, 
+  Package, 
+  Truck, 
+  CreditCard, 
+  User, 
+  MapPin, 
+  Phone, 
+  Calendar,
+  CheckCircle,
+  ArrowRight,
+  ArrowLeft,
+  Flower,
+  Globe,
+  Shield,
+  Zap
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -31,10 +47,34 @@ const Orders = () => {
   });
 
   const flowerCategories = [
-    { id: "extra-premium", name: "Extra Premium Roses", description: "Our finest quality roses" },
-    { id: "premium", name: "Premium Roses", description: "High-quality roses for special occasions" },
-    { id: "intermediate", name: "Intermediate Roses", description: "Great value roses" },
-    { id: "spray", name: "Spray Roses", description: "Perfect for arrangements" }
+    { 
+      id: "extra-premium", 
+      name: "Extra Premium Roses", 
+      description: "Our finest quality roses with exceptional bloom size and stem length",
+      icon: Flower,
+      color: "text-primary"
+    },
+    { 
+      id: "premium", 
+      name: "Premium Roses", 
+      description: "High-quality roses perfect for special occasions and luxury markets",
+      icon: Flower,
+      color: "text-secondary"
+    },
+    { 
+      id: "intermediate", 
+      name: "Intermediate Roses", 
+      description: "Great value roses with excellent quality for everyday use",
+      icon: Flower,
+      color: "text-botanical"
+    },
+    { 
+      id: "spray", 
+      name: "Spray Roses", 
+      description: "Multiple blooms per stem, perfect for arrangements and bouquets",
+      icon: Flower,
+      color: "text-accent-foreground"
+    }
   ];
 
   const roseVarieties = [
@@ -95,177 +135,243 @@ const Orders = () => {
     }
   };
 
+  const getStepIcon = (step: number) => {
+    switch (step) {
+      case 1: return Package;
+      case 2: return User;
+      case 3: return Truck;
+      default: return Package;
+    }
+  };
+
+  const getStepTitle = (step: number) => {
+    switch (step) {
+      case 1: return "Product Details";
+      case 2: return "Customer Information";
+      case 3: return "Shipping & Requirements";
+      default: return "";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-muted/20 py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-playfair">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary-50/20 to-secondary-50/20 py-12 pt-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Enhanced Header */}
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+              <ShoppingCart className="h-10 w-10 text-white" />
+            </div>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 font-playfair">
             Place Your Order
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to import premium Kenyan roses? Fill out our order form and we'll 
-            prepare a customized quote for your flower import needs.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Ready to import premium Kenyan roses? Fill out our comprehensive order form and we'll 
+            prepare a customized quote for your flower import needs. Experience the finest quality 
+            with our sustainable farming practices.
           </p>
         </div>
 
-        {/* Progress Steps */}
-        <div className="flex items-center justify-center mb-12">
-          <div className="flex items-center space-x-4">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex items-center">
-                <div 
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-smooth ${
-                    orderStep >= step 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'bg-muted text-muted-foreground'
-                  }`}
-                >
-                  {step}
-                </div>
-                {step < 3 && (
-                  <div 
-                    className={`w-16 h-1 mx-2 transition-smooth ${
-                      orderStep > step ? 'bg-primary' : 'bg-muted'
-                    }`}
-                  />
-                )}
-              </div>
-            ))}
+        {/* Enhanced Progress Steps */}
+        <div className="mb-16">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center space-x-8">
+              {[1, 2, 3].map((step) => {
+                const Icon = getStepIcon(step);
+                const isActive = orderStep >= step;
+                const isCompleted = orderStep > step;
+                
+                return (
+                  <div key={step} className="flex items-center">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div 
+                        className={`w-16 h-16 rounded-full flex items-center justify-center font-semibold text-lg transition-all duration-500 ${
+                          isCompleted 
+                            ? 'bg-green-500 text-white shadow-lg' 
+                            : isActive 
+                              ? 'bg-primary text-white shadow-lg scale-110' 
+                              : 'bg-muted text-muted-foreground'
+                        }`}
+                      >
+                        {isCompleted ? <CheckCircle className="h-8 w-8" /> : <Icon className="h-8 w-8" />}
+                      </div>
+                      <span className={`text-sm font-medium transition-colors duration-300 ${
+                        isActive ? 'text-foreground' : 'text-muted-foreground'
+                      }`}>
+                        {getStepTitle(step)}
+                      </span>
+                    </div>
+                    {step < 3 && (
+                      <div 
+                        className={`w-24 h-1 mx-8 transition-all duration-500 rounded-full ${
+                          isCompleted ? 'bg-green-500' : isActive ? 'bg-primary' : 'bg-muted'
+                        }`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Order Form */}
-        <Card className="shadow-elegant animate-scale-in">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              {orderStep === 1 && <Package className="h-6 w-6 text-primary" />}
-              {orderStep === 2 && <User className="h-6 w-6 text-primary" />}
-              {orderStep === 3 && <Truck className="h-6 w-6 text-primary" />}
-              <span>
-                {orderStep === 1 && "Step 1: Product Details"}
-                {orderStep === 2 && "Step 2: Customer Information"}
-                {orderStep === 3 && "Step 3: Shipping & Special Requirements"}
+        {/* Enhanced Order Form */}
+        <Card className="shadow-3d hover:shadow-strong transition-shadow duration-500 animate-scale-in overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b border-border/50">
+            <CardTitle className="flex items-center space-x-3 text-2xl">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                orderStep === 1 ? 'bg-primary/20' : 
+                orderStep === 2 ? 'bg-secondary/20' : 'bg-botanical/20'
+              }`}>
+                {(() => {
+                  const Icon = getStepIcon(orderStep);
+                  return <Icon className={`h-6 w-6 ${
+                    orderStep === 1 ? 'text-primary' : 
+                    orderStep === 2 ? 'text-secondary' : 'text-botanical'
+                  }`} />;
+                })()}
+              </div>
+              <span className="font-playfair">
+                Step {orderStep}: {getStepTitle(orderStep)}
               </span>
             </CardTitle>
           </CardHeader>
           
-          <CardContent>
+          <CardContent className="p-8">
             <form onSubmit={handleSubmitOrder}>
               {/* Step 1: Product Details */}
               {orderStep === 1 && (
-                <div className="space-y-6">
+                <div className="space-y-8">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Flower Category
+                    <label className="block text-lg font-semibold text-foreground mb-4">
+                      Flower Category *
                     </label>
-                    <Select value={orderData.flowerType} onValueChange={(value) => handleInputChange('flowerType', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select flower category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {flowerCategories.map((category) => (
-                          <SelectItem key={category.id} value={category.id}>
-                            <div>
-                              <div className="font-medium">{category.name}</div>
-                              <div className="text-sm text-muted-foreground">{category.description}</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {flowerCategories.map((category) => {
+                        const Icon = category.icon;
+                        const isSelected = orderData.flowerType === category.id;
+                        
+                        return (
+                          <div
+                            key={category.id}
+                            onClick={() => handleInputChange('flowerType', category.id)}
+                            className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                              isSelected
+                                ? 'border-primary bg-primary/5 shadow-elegant'
+                                : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                            }`}
+                          >
+                            <div className="flex items-start space-x-4">
+                              <Icon className={`h-8 w-8 ${category.color} mt-1`} />
+                              <div>
+                                <h4 className="font-semibold text-foreground mb-2">{category.name}</h4>
+                                <p className="text-muted-foreground text-sm leading-relaxed">{category.description}</p>
+                              </div>
                             </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Rose Variety
-                    </label>
-                    <Select value={orderData.variety} onValueChange={(value) => handleInputChange('variety', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select rose variety" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {roseVarieties.map((variety) => (
-                          <SelectItem key={variety} value={variety}>
-                            {variety}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Quantity (stems)
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Rose Variety *
+                      </label>
+                      <Select value={orderData.variety} onValueChange={(value) => handleInputChange('variety', value)}>
+                        <SelectTrigger className="h-12 text-base">
+                          <SelectValue placeholder="Select rose variety" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {roseVarieties.map((variety) => (
+                            <SelectItem key={variety} value={variety}>
+                              {variety}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Quantity (stems) *
                       </label>
                       <Input
                         type="number"
-                        placeholder="e.g., 10000"
+                        placeholder="e.g., 10,000"
                         value={orderData.quantity}
                         onChange={(e) => handleInputChange('quantity', e.target.value)}
+                        className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Preferred Delivery Date
-                      </label>
-                      <Input
-                        type="date"
-                        value={orderData.deliveryDate}
-                        onChange={(e) => handleInputChange('deliveryDate', e.target.value)}
-                      />
-                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-lg font-semibold text-foreground mb-4">
+                      Preferred Delivery Date *
+                    </label>
+                    <Input
+                      type="date"
+                      value={orderData.deliveryDate}
+                      onChange={(e) => handleInputChange('deliveryDate', e.target.value)}
+                      className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    />
                   </div>
                 </div>
               )}
 
               {/* Step 2: Customer Information */}
               {orderStep === 2 && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Company Name
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Company Name *
                       </label>
                       <Input
                         placeholder="Your company name"
                         value={orderData.companyName}
                         onChange={(e) => handleInputChange('companyName', e.target.value)}
+                        className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Contact Person
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Contact Person *
                       </label>
                       <Input
                         placeholder="Full name"
                         value={orderData.contactName}
                         onChange={(e) => handleInputChange('contactName', e.target.value)}
+                        className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Email Address
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Email Address *
                       </label>
                       <Input
                         type="email"
                         placeholder="your@email.com"
                         value={orderData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
+                        className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Phone Number
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Phone Number *
                       </label>
                       <Input
                         placeholder="+1 (555) 123-4567"
                         value={orderData.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
+                        className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     </div>
                   </div>
@@ -274,14 +380,14 @@ const Orders = () => {
 
               {/* Step 3: Shipping & Requirements */}
               {orderStep === 3 && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Destination Country
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        Destination Country *
                       </label>
                       <Select value={orderData.country} onValueChange={(value) => handleInputChange('country', value)}>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
                         <SelectContent>
@@ -294,31 +400,33 @@ const Orders = () => {
                       </Select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        City
+                      <label className="block text-lg font-semibold text-foreground mb-4">
+                        City *
                       </label>
                       <Input
                         placeholder="Destination city"
                         value={orderData.city}
                         onChange={(e) => handleInputChange('city', e.target.value)}
+                        className="h-12 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Delivery Address
+                    <label className="block text-lg font-semibold text-foreground mb-4">
+                      Delivery Address *
                     </label>
                     <Textarea
                       placeholder="Complete delivery address including postal code"
                       value={orderData.address}
                       onChange={(e) => handleInputChange('address', e.target.value)}
                       rows={3}
+                      className="text-base focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="block text-lg font-semibold text-foreground mb-4">
                       Special Requirements (Optional)
                     </label>
                     <Textarea
@@ -326,20 +434,23 @@ const Orders = () => {
                       value={orderData.specialRequirements}
                       onChange={(e) => handleInputChange('specialRequirements', e.target.value)}
                       rows={4}
+                      className="text-base focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none"
                     />
                   </div>
                 </div>
               )}
 
-              {/* Action Buttons */}
-              <div className="flex justify-between mt-8">
+              {/* Enhanced Action Buttons */}
+              <div className="flex justify-between mt-12 pt-8 border-t border-border">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handlePreviousStep}
                   disabled={orderStep === 1}
+                  className="h-12 px-8 text-base group"
                 >
-                  Previous
+                  <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                  Previous Step
                 </Button>
 
                 {orderStep < 3 ? (
@@ -348,18 +459,21 @@ const Orders = () => {
                     variant="hero"
                     onClick={handleNextStep}
                     disabled={!isStepValid(orderStep)}
+                    className="h-12 px-8 text-base group"
                   >
                     Next Step
+                    <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 ) : (
                   <Button
                     type="submit"
                     variant="hero"
                     disabled={!isStepValid(orderStep)}
-                    className="group"
+                    className="h-12 px-8 text-base group"
                   >
-                    <ShoppingCart className="h-5 w-5" />
+                    <ShoppingCart className="h-5 w-5 mr-2" />
                     Submit Order Request
+                    <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 )}
               </div>
@@ -367,11 +481,13 @@ const Orders = () => {
           </CardContent>
         </Card>
 
-        {/* Information Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <Card className="shadow-soft card-gradient">
-            <CardContent className="p-6 text-center">
-              <Calendar className="h-8 w-8 text-primary mx-auto mb-4" />
+        {/* Enhanced Information Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
+          <Card className="shadow-soft card-gradient hover:shadow-elegant transition-shadow duration-300 text-center">
+            <CardContent className="p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="h-8 w-8 text-primary" />
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Quick Response</h3>
               <p className="text-muted-foreground text-sm">
                 We'll respond to your order request within 24 hours with a detailed quote.
@@ -379,9 +495,11 @@ const Orders = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-soft card-gradient">
-            <CardContent className="p-6 text-center">
-              <CreditCard className="h-8 w-8 text-secondary mx-auto mb-4" />
+          <Card className="shadow-soft card-gradient hover:shadow-elegant transition-shadow duration-300 text-center">
+            <CardContent className="p-6">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CreditCard className="h-8 w-8 text-secondary" />
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Flexible Payment</h3>
               <p className="text-muted-foreground text-sm">
                 Multiple payment options available including bank transfer and credit terms.
@@ -389,15 +507,55 @@ const Orders = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-soft card-gradient">
-            <CardContent className="p-6 text-center">
-              <Truck className="h-8 w-8 text-primary mx-auto mb-4" />
+          <Card className="shadow-soft card-gradient hover:shadow-elegant transition-shadow duration-300 text-center">
+            <CardContent className="p-6">
+              <div className="w-16 h-16 bg-botanical/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Truck className="h-8 w-8 text-botanical" />
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Fast Delivery</h3>
               <p className="text-muted-foreground text-sm">
                 Air freight delivery ensures your flowers arrive fresh at their destination.
               </p>
             </CardContent>
           </Card>
+
+          <Card className="shadow-soft card-gradient hover:shadow-elegant transition-shadow duration-300 text-center">
+            <CardContent className="p-6">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-8 w-8 text-accent-foreground" />
+              </div>
+              <h3 className="font-semibold text-foreground mb-2">Quality Guaranteed</h3>
+              <p className="text-muted-foreground text-sm">
+                Premium quality flowers with freshness guarantee and quality assurance.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Additional Information Section */}
+        <div className="mt-20 text-center">
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-3xl p-12 border border-primary/10">
+            <h3 className="text-3xl font-bold text-foreground mb-6 font-playfair">
+              Why Choose Credible Blooms?
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+              <div className="text-center">
+                <Globe className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-foreground mb-2">Global Export Expertise</h4>
+                <p className="text-muted-foreground">25+ years of experience in international flower exports</p>
+              </div>
+              <div className="text-center">
+                <Flower className="h-12 w-12 text-secondary mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-foreground mb-2">Premium Quality</h4>
+                <p className="text-muted-foreground">Highest quality standards with sustainable farming practices</p>
+              </div>
+              <div className="text-center">
+                <Shield className="h-12 w-12 text-botanical mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-foreground mb-2">Reliable Service</h4>
+                <p className="text-muted-foreground">Consistent delivery and exceptional customer support</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
