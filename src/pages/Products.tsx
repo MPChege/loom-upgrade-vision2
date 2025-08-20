@@ -166,7 +166,7 @@ const Products = () => {
     }
   ];
 
-  const getLocalizedName = (nameObj: any) => {
+  const getLocalizedName = (nameObj: Record<string, string>) => {
     return nameObj[language] || nameObj.en;
   };
 

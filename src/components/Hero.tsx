@@ -29,7 +29,7 @@ const Hero = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [heroImages.length]);
 
   useEffect(() => {
     const handleScroll = () => {
