@@ -50,9 +50,11 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
-              <div className="h-14 w-auto bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center px-4 transition-transform duration-300 group-hover:scale-105">
-                <span className="text-white font-bold text-xl font-playfair">Credible Blooms</span>
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Credible Blooms Logo" 
+                className="h-14 w-auto transition-transform duration-300 group-hover:scale-105"
+              />
             </Link>
           </div>
 
